@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { ScrollView, Text, Image, View } from 'react-native'
 import DevscreensButton from '../../ignite/DevScreens/DevscreensButton.js'
 import Header from './Header';
+import SearchTutor from './SearchTutor';
 
 import { Images } from '../Themes'
 
@@ -25,6 +26,7 @@ export default class LaunchScreen extends Component {
             </Text>
           </View>
 
+          <SearchTutor />
           <DevscreensButton />
         </ScrollView>
       </View>
