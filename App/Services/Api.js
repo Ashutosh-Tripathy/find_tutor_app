@@ -37,7 +37,10 @@ const create = (baseURL = 'http://localhost:8080/api/') => {
   const getRoot = () => api.get('')
   const getRate = () => api.get('rate_limit')
   const getUser = (username) => api.get('search/users', {q: username})
-  const getStates = () => api.get('states', {q: username})
+  const getStates = () => {
+    let resp = api.get('states');
+    return resp;
+  } 
 
   // ------
   // STEP 3
@@ -55,7 +58,8 @@ const create = (baseURL = 'http://localhost:8080/api/') => {
     // a list of the API functions from step 2
     getRoot,
     getRate,
-    getUser
+    getUser,
+    getStates
   }
 }
 

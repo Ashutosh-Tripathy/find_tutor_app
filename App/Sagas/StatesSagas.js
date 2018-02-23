@@ -7,10 +7,10 @@ export function * getStates (api) {
   const response = yield call(api.getStates)
 
   if (response.ok) {
-    const states = path(['data', 'states'], response);
+    const states = path(['data'], response);
     // do data conversion here if needed
-    yield put(StateActions.statesSuccess(states))
+    yield put(StatesActions.statesSuccess(states))
   } else {
-    yield put(StateActions.statesFailure())
+    yield put(StatesActions.statesFailure())
   }
 }

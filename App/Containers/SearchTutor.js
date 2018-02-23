@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 
-import StatesActions from '../Redux/StatesRedux';
+import StatesActions, { StatesTypes, statesRequest } from '../Redux/StatesRedux';
 
 // Styles
 import styles from './Styles/SearchTutorStyle'
@@ -26,6 +26,7 @@ class SearchTutor extends Component {
       }
     this.showExtraSearchFields = this.showExtraSearchFields.bind(this);
     this.loadStates = this.loadStates.bind(this);
+   
   }
 
   showExtraSearchFields = () => {
@@ -36,11 +37,12 @@ class SearchTutor extends Component {
   }
 
   loadStates() {
-    this.props.getStates()
-      .catch((error) => {
-        toastr.error(error);
-        this.setState({ saving: false });
-      });
+    action(StatesTypes.STATES_REQUEST);
+    //this.props.getStates()
+      //.catch((error) => {
+        //toastr.error(error);
+        //this.setState({ saving: false });
+      //});
   }
 
   loadDistrict(event) {
@@ -62,6 +64,7 @@ class SearchTutor extends Component {
         <Picker.Item label="Java" value="java" />
         <Picker.Item label="JavaScript" value="js" />
         </Picker>
+        <Text> {JSON.stringify(this.state.states)} </Text>
         <Button onPress ={this.showExtraSearchFields} title= {this.state.btnText} />
         {(() => {
                   if(this.state.extraFields){
@@ -98,7 +101,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getStates: () => dispatch(StatesActions.getStates())
+    getStates: () => dispatch({type: StatesTypes.STATES_REQUEST})
   }
 }
 
