@@ -16,34 +16,35 @@ class SearchTutor extends Component {
     getStates: PropTypes.func
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
-      this.state = {
-        extraFields: false,
-        btnText: "⇩",
-        states: [],
-        districts: []
-      }
+    this.state = {
+      extraFields: false,
+      btnText: "⇩"
+    }
     this.showExtraSearchFields = this.showExtraSearchFields.bind(this);
-    this.loadStates = this.loadStates.bind(this);
-   
+    // this.loadStates = this.loadStates.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState(() => ({ states: nextProps.states }));
   }
 
   showExtraSearchFields = () => {
-    this.setState((prevState)=> ({extraFields: !prevState.extraFields, btnText: prevState.btnText=="⇩"? "⇧": "⇩"}));
-    if(this.state.states.length == 0) {
-      this.props.getStates();
+    this.setState((prevState) => ({ extraFields: !prevState.extraFields, btnText: prevState.btnText == "⇩" ? "⇧" : "⇩" }));
+    if (this.props.states.length == 0) {
     }
+    this.props.getStates();
   }
 
-  loadStates() {
-    action(StatesTypes.STATES_REQUEST);
-    //this.props.getStates()
-      //.catch((error) => {
-        //toastr.error(error);
-        //this.setState({ saving: false });
-      //});
-  }
+  // loadStates() {
+  //   action(StatesTypes.STATES_REQUEST);
+  //   //this.props.getStates()
+  //   //.catch((error) => {
+  //   //toastr.error(error);
+  //   //this.setState({ saving: false });
+  //   //});
+  // }
 
   loadDistrict(event) {
     let stateId = event.target.id;
@@ -55,53 +56,59 @@ class SearchTutor extends Component {
       });
   }
 
-  render () {
+  render() {
     return (
-        <View style={styles.section} >
+      <View style={styles.section} >
         <Text>Subject</Text>
         <Picker>
-        <Picker.Item label="Please select any subject" value="0" />
-        <Picker.Item label="Java" value="java" />
-        <Picker.Item label="JavaScript" value="js" />
+          <Picker.Item label="Please select any subject" value="0" />
+          <Picker.Item label="Java" value="java" />
+          <Picker.Item label="JavaScript" value="js" />
         </Picker>
+        <Text> JSON String </Text>
         <Text> {JSON.stringify(this.state.states)} </Text>
-        <Button onPress ={this.showExtraSearchFields} title= {this.state.btnText} />
+        <Button onPress={this.showExtraSearchFields} title={this.state.btnText} />
         {(() => {
-                  if(this.state.extraFields){
-                    return (<View>
-                        <Text>State</Text>
-                        <Picker>
-                        <Picker.Item label="Please select any state" value="0" />
-                        <Picker.Item label="Karnataka" value="karnataka" />
-                        <Picker.Item label="UP" value="up" />
-                        </Picker>
+          if (this.state.extraFields) {
+            return (<View>
+              <Text>State</Text>
+              <Picker>
+                <Picker.Item label="Please select any state" value="0" />
+                <Picker.Item label="Karnataka" value="karnataka" />
+                <Picker.Item label="UP" value="up" />
+              </Picker>
 
-                        <Text>District</Text>
-                        <Picker>
-                        <Picker.Item label="Please select any district" value="0" />
-                        <Picker.Item label="Gorakhpur" value="gorakhpur" />
-                        <Picker.Item label="Deoria" value="deoria" />
-                        </Picker>
-                        </View> );
+              <Text>District</Text>
+              <Picker>
+                <Picker.Item label="Please select any district" value="0" />
+                <Picker.Item label="Gorakhpur" value="gorakhpur" />
+                <Picker.Item label="Deoria" value="deoria" />
+              </Picker>
+            </View>);
 
-                  }
-                })()
+          }
+        })()
 
         }
-    <Button title="Search"/>
+        <Button title="Search" />
       </View>
-      )
+    )
   }
 }
 
+SearchTutor.propTypes = {
+  states: PropTypes.array.isRequired
+};
+
 const mapStateToProps = (state) => {
   return {
+    states: state.states
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getStates: () => dispatch({type: StatesTypes.STATES_REQUEST})
+    getStates: () => dispatch({ type: StatesTypes.STATES_REQUEST })
   }
 }
 

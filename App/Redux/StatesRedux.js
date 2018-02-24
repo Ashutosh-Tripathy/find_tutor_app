@@ -27,7 +27,7 @@ export const INITIAL_STATE = Immutable({
 
 // request the states for a state
 export const request = (state) =>
-  state.merge({ fetching: true })
+  state.merge({ fetching: true, states: [] })
 
 // successful states lookup
 export const success = (state, action) => {
