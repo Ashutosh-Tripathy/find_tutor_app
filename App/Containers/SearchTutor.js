@@ -74,8 +74,7 @@ class SearchTutor extends Component {
               <Text>State</Text>
               <Picker>
                 <Picker.Item label="Please select any state" value="0" />
-                <Picker.Item label="Karnataka" value="karnataka" />
-                <Picker.Item label="UP" value="up" />
+                {(this.state.states.states || []).map(x => <Picker.Item key={x.id} label={x.name} value={x.id} />)}
               </Picker>
 
               <Text>District</Text>
@@ -97,7 +96,7 @@ class SearchTutor extends Component {
 }
 
 SearchTutor.propTypes = {
-  states: PropTypes.array.isRequired
+  states: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => {

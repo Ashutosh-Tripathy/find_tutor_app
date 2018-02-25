@@ -2,7 +2,7 @@
 import apisauce from 'apisauce'
 
 // our "constructor"
-const create = (baseURL = 'http://localhost:8080/api/') => {
+const create = (baseURL = 'http://52.172.34.19:8080/api/') => {
   // ------
   // STEP 1
   // ------
