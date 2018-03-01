@@ -42,6 +42,11 @@ const create = (baseURL = 'http://52.172.34.19:8080/api/') => {
     return resp;
   } 
 
+  const getDistricts = (stateId) => {
+    let resp = api.get('districts/' + (stateId || 5) );
+    return resp;
+  } 
+
   // ------
   // STEP 3
   // ------
@@ -59,7 +64,8 @@ const create = (baseURL = 'http://52.172.34.19:8080/api/') => {
     getRoot,
     getRate,
     getUser,
-    getStates
+    getStates,
+    getDistricts
   }
 }
 

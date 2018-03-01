@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 
-import StatesActions, { StatesTypes, statesRequest } from '../Redux/StatesRedux';
+import { StatesTypes} from '../Redux/StatesRedux';
+import { DistrictsTypes} from '../Redux/DistrictsRedux';
 
 // Styles
 import styles from './Styles/SearchTutorStyle'
@@ -13,7 +14,8 @@ import styles from './Styles/SearchTutorStyle'
 class SearchTutor extends Component {
 
   static propTypes = {
-    getStates: PropTypes.func
+    getStates: PropTypes.func,
+    getDistricts: PropTypes.func
   }
 
   constructor(props) {
@@ -27,7 +29,7 @@ class SearchTutor extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState(() => ({ states: nextProps.states }));
+    this.setState(() => ({ states: nextProps.states, districts: nextProps.districts }));
   }
 
   showExtraSearchFields = () => {
@@ -35,25 +37,7 @@ class SearchTutor extends Component {
     if (this.props.states.length == 0) {
     }
     this.props.getStates();
-  }
-
-  // loadStates() {
-  //   action(StatesTypes.STATES_REQUEST);
-  //   //this.props.getStates()
-  //   //.catch((error) => {
-  //   //toastr.error(error);
-  //   //this.setState({ saving: false });
-  //   //});
-  // }
-
-  loadDistrict(event) {
-    let stateId = event.target.id;
-    let users = Object.assign({}, this.state.districts);
-    this.props.actions.loadDistricts(stateId)
-      .catch((error) => {
-        toastr.error(error);
-        this.setState({ saving: false });
-      });
+    this.props.getDistricts(15);
   }
 
   render() {
@@ -80,14 +64,11 @@ class SearchTutor extends Component {
               <Text>District</Text>
               <Picker>
                 <Picker.Item label="Please select any district" value="0" />
-                <Picker.Item label="Gorakhpur" value="gorakhpur" />
-                <Picker.Item label="Deoria" value="deoria" />
+                {(this.state.districts.districts || []).map(x => <Picker.Item key={x.id} label={x.name} value={x.id} />)}
               </Picker>
             </View>);
-
           }
         })()
-
         }
         <Button title="Search" />
       </View>
@@ -96,18 +77,21 @@ class SearchTutor extends Component {
 }
 
 SearchTutor.propTypes = {
-  states: PropTypes.object.isRequired
+  states: PropTypes.object.isRequired,
+  districts: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => {
   return {
-    states: state.states
+    states: state.states,
+    districts: state.districts                                            
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getStates: () => dispatch({ type: StatesTypes.STATES_REQUEST })
+    getStates: () => dispatch({ type: StatesTypes.STATES_REQUEST }),
+    getDistricts: (stateId) => dispatch({ type: DistrictsTypes.DISTRICTS_REQUEST, stateId })
   }
 }
 
