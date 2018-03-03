@@ -7,6 +7,7 @@ import DebugConfig from '../Config/DebugConfig'
 
 import { StartupTypes } from '../Redux/StartupRedux'
 import { GithubTypes } from '../Redux/GithubRedux'
+import { SubjectsTypes } from '../Redux/SubjectsRedux'
 import { StatesTypes } from '../Redux/StatesRedux'
 import { DistrictsTypes } from '../Redux/DistrictsRedux'
 
@@ -14,6 +15,7 @@ import { DistrictsTypes } from '../Redux/DistrictsRedux'
 
 import { startup } from './StartupSagas'
 import { getUserAvatar } from './GithubSagas'
+import { getSubjects } from './SubjectsSagas'
 import { getStates } from './StatesSagas'
 import { getDistricts } from './DistrictsSagas'
 
@@ -32,6 +34,7 @@ export default function * root () {
 
     // some sagas receive extra parameters in addition to an action
     takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api),
+    takeLatest(SubjectsTypes.SUBJECTS_REQUEST, getSubjects, api),
     takeLatest(StatesTypes.STATES_REQUEST, getStates, api),
     takeLatest(DistrictsTypes.DISTRICTS_REQUEST, getDistricts, api)
   ])

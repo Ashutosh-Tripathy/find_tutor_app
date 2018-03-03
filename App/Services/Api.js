@@ -37,11 +37,10 @@ const create = (baseURL = 'http://52.172.34.19:8080/api/') => {
   const getRoot = () => api.get('')
   const getRate = () => api.get('rate_limit')
   const getUser = (username) => api.get('search/users', {q: username})
-  const getStates = () => {
-    let resp = api.get('states');
-    return resp;
-  } 
-
+  
+  const getSubjects = () => api.get('subjects') 
+  const getStates = () => api.get('states') 
+  
   const getDistricts = (stateId) => {
     let resp = api.get('districts/' + (stateId || 5) );
     return resp;
@@ -64,6 +63,7 @@ const create = (baseURL = 'http://52.172.34.19:8080/api/') => {
     getRoot,
     getRate,
     getUser,
+    getSubjects,
     getStates,
     getDistricts
   }
