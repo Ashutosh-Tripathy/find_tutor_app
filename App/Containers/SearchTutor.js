@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 
-import { StatesTypes} from '../Redux/StatesRedux';
-import { DistrictsTypes} from '../Redux/DistrictsRedux';
+import { StatesTypes } from '../Redux/StatesRedux';
+import { DistrictsTypes } from '../Redux/DistrictsRedux';
 
 // Styles
 import styles from './Styles/SearchTutorStyle'
@@ -22,7 +22,9 @@ class SearchTutor extends Component {
     super(props)
     this.state = {
       extraFields: false,
-      btnText: "⇩"
+      btnText: "⇩",
+      stateId: 0,
+      districtId: 0,
     }
     this.showExtraSearchFields = this.showExtraSearchFields.bind(this);
     // this.loadStates = this.loadStates.bind(this);
@@ -35,9 +37,13 @@ class SearchTutor extends Component {
   showExtraSearchFields = () => {
     this.setState((prevState) => ({ extraFields: !prevState.extraFields, btnText: prevState.btnText == "⇩" ? "⇧" : "⇩" }));
     if (this.props.states.length == 0) {
+      this.props.getStates();
     }
-    this.props.getStates();
-    this.props.getDistricts(15);
+  }
+
+  stateChange = (stateValue, stateIndex) => {
+    this.setState({ stateId: stateValue });
+    this.props.getDistricts(stateValue);
   }
 
   render() {
@@ -49,20 +55,22 @@ class SearchTutor extends Component {
           <Picker.Item label="Java" value="java" />
           <Picker.Item label="JavaScript" value="js" />
         </Picker>
-        <Text> JSON String </Text>
-        <Text> {JSON.stringify(this.state.states)} </Text>
+        <Text> StateId: </Text>
+        <Text> {this.state.stateId} </Text>
+        <Text> DistrictId: </Text>
+        <Text> {this.state.districtId} </Text>
         <Button onPress={this.showExtraSearchFields} title={this.state.btnText} />
         {(() => {
           if (this.state.extraFields) {
             return (<View>
               <Text>State</Text>
-              <Picker>
+              <Picker selectedValue={this.state.stateId} onValueChange={(stateValue, stateIndex) => this.stateChange(stateValue, stateIndex)}>
                 <Picker.Item label="Please select any state" value="0" />
                 {(this.state.states.states || []).map(x => <Picker.Item key={x.id} label={x.name} value={x.id} />)}
               </Picker>
 
               <Text>District</Text>
-              <Picker>
+              <Picker selectedValue={this.state.districtId} onValueChange={(districtValue, districtIndex) => this.setState({ districtId: districtValue })}>
                 <Picker.Item label="Please select any district" value="0" />
                 {(this.state.districts.districts || []).map(x => <Picker.Item key={x.id} label={x.name} value={x.id} />)}
               </Picker>
@@ -84,7 +92,7 @@ SearchTutor.propTypes = {
 const mapStateToProps = (state) => {
   return {
     states: state.states,
-    districts: state.districts                                            
+    districts: state.districts
   }
 }
 
