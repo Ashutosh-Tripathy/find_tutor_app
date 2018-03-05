@@ -9,6 +9,7 @@ import { SubjectsTypes } from '../Redux/SubjectsRedux';
 import { StatesTypes } from '../Redux/StatesRedux';
 import { DistrictsTypes } from '../Redux/DistrictsRedux';
 import { SearchTutorTypes } from '../Redux/SearchTutorRedux';
+import TutorList from './TutorList';
 
 // Styles
 import styles from './Styles/SearchTutorStyle'
@@ -94,6 +95,8 @@ class SearchTutor extends Component {
         })()
         }
         <Button title="Search" onPress={() => this.props.searchTutor(this.state.subjectId, this.state.stateId, this.state.districtId)} />
+        
+        <TutorList tutors = {this.state.tutors} />
       </View>
     )
   }
