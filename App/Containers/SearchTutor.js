@@ -31,14 +31,14 @@ class SearchTutor extends Component {
       subjectId: 0,
       stateId: 0,
       districtId: 0,
-      tutors: []
+      tutors: [1, 2]
     }
     this.showExtraSearchFields = this.showExtraSearchFields.bind(this);
     // this.loadStates = this.loadStates.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState(() => ({ subjects: nextProps.subjects, states: nextProps.states, districts: nextProps.districts, tutors: nextProps.tutors }));
+    this.setState(() => ({ subjects: nextProps.subjects, states: nextProps.states, districts: nextProps.districts, tutors: (nextProps.tutors || [1, 2]) }));
   }
 
   showExtraSearchFields = () => {
@@ -95,8 +95,8 @@ class SearchTutor extends Component {
         })()
         }
         <Button title="Search" onPress={() => this.props.searchTutor(this.state.subjectId, this.state.stateId, this.state.districtId)} />
-        
-        <TutorList tutors = {this.state.tutors} />
+
+        <TutorList tutors={this.state.tutors} />
       </View>
     )
   }
