@@ -31,7 +31,8 @@ export const request = (state) =>
 
 // successful searchTutor lookup
 export const success = (state, action) => {
-  const { tutors } = action
+  const { searchTutor } = action
+  let tutors = searchTutor;
   return state.merge({ fetching: false, error: null, tutors })
 }
 

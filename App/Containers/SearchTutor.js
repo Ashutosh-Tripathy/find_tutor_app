@@ -31,14 +31,14 @@ class SearchTutor extends Component {
       subjectId: 0,
       stateId: 0,
       districtId: 0,
-      tutors: [1, 2]
+      tutors: []
     }
     this.showExtraSearchFields = this.showExtraSearchFields.bind(this);
     // this.loadStates = this.loadStates.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState(() => ({ subjects: nextProps.subjects, states: nextProps.states, districts: nextProps.districts, tutors: (nextProps.tutors || [1, 2]) }));
+    this.setState(() => ({ subjects: nextProps.subjects, states: nextProps.states, districts: nextProps.districts, searchTutor: nextProps.searchTutor }));
   }
 
   showExtraSearchFields = () => {
@@ -74,7 +74,7 @@ class SearchTutor extends Component {
         <Text> DistrictId: </Text>
         <Text> {this.state.districtId} </Text>
         <Text> Tutors: </Text>
-        <Text> {this.state.tutors} </Text>
+        <Text> {JSON.stringify(this.state.searchTutor && this.state.searchTutor.tutors)} </Text>
         <Button onPress={this.showExtraSearchFields} title={this.state.btnText} />
         {(() => {
           if (this.state.extraFields) {
@@ -94,9 +94,9 @@ class SearchTutor extends Component {
           }
         })()
         }
-        <Button title="Search" onPress={() => this.props.searchTutor(this.state.subjectId, this.state.stateId, this.state.districtId)} />
+        <Button title="Search" onPress={() => this.props.pressSearchTutor(this.state.subjectId, this.state.stateId, this.state.districtId)} />
 
-        <TutorList tutors={this.state.tutors} />
+        <TutorList tutors={(this.state.searchTutor && this.state.searchTutor.tutors) || []} />
       </View>
     )
   }
@@ -112,7 +112,8 @@ const mapStateToProps = (state) => {
   return {
     subjects: state.subjects,
     states: state.states,
-    districts: state.districts
+    districts: state.districts,
+    searchTutor: state.searchTutor
   }
 }
 
@@ -121,7 +122,7 @@ const mapDispatchToProps = (dispatch) => {
     getSubjects: () => dispatch({ type: SubjectsTypes.SUBJECTS_REQUEST }),
     getStates: () => dispatch({ type: StatesTypes.STATES_REQUEST }),
     getDistricts: (stateId) => dispatch({ type: DistrictsTypes.DISTRICTS_REQUEST, stateId }),
-    searchTutor: (subjectId, stateId, districtId) => dispatch({ type: SearchTutorTypes.SEARCH_TUTOR_REQUEST, subjectId, stateId, districtId })
+    pressSearchTutor: (subjectId, stateId, districtId) => dispatch({ type: SearchTutorTypes.SEARCH_TUTOR_REQUEST, subjectId, stateId, districtId })
   }
 }
 
