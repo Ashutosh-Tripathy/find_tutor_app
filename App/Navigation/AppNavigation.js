@@ -1,4 +1,5 @@
 import { StackNavigator } from 'react-navigation'
+import TutorDetail from '../Containers/TutorDetail'
 import TutorRow from '../Containers/TutorRow'
 import TutorList from '../Containers/TutorList'
 import SearchTutor from '../Containers/SearchTutor'
@@ -9,18 +10,18 @@ import styles from './Styles/NavigationStyles'
 
 // Manifest of possible screens
 const PrimaryNav = StackNavigator({
+  SearchTutor: { screen: SearchTutor },
+  TutorDetail: { screen: TutorDetail },
   TutorRow: { screen: TutorRow },
   TutorList: { screen: TutorList },
-  SearchTutor: { screen: SearchTutor },
   Header: { screen: Header },
   LaunchScreen: { screen: LaunchScreen }
 }, {
-  // Default config for all screens
-  headerMode: 'none',
-  initialRouteName: 'LaunchScreen',
-  navigationOptions: {
-    headerStyle: styles.header
-  }
-})
+    // Default config for all screens
+    initialRouteName: 'SearchTutor',
+    navigationOptions: {
+      headerStyle: styles.header
+    }
+  })
 
 export default PrimaryNav

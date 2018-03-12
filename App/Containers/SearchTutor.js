@@ -51,12 +51,17 @@ class SearchTutor extends Component {
   componentDidMount() {
     if (this.props.subjects.subjects.length == 0) {
       this.props.getSubjects();
+      console.log(JSON.stringify(this.props));
     }
   }
 
   stateChange = (stateValue) => {
     this.setState({ stateId: stateValue });
     this.props.getDistricts(stateValue);
+  }
+
+  onTutorRowPress = () => {
+    this.props.navigation.navigate('TutorDetail', {});
   }
 
   render() {
@@ -96,7 +101,7 @@ class SearchTutor extends Component {
         }
         <Button title="Search" onPress={() => this.props.pressSearchTutor(this.state.subjectId, this.state.stateId, this.state.districtId)} />
 
-        <TutorList tutors={(this.state.searchTutor && this.state.searchTutor.tutors) || []} />
+        <TutorList tutors={(this.state.searchTutor && this.state.searchTutor.tutors) || []} tutorRowPress={this.onTutorRowPress} />
       </View>
     )
   }

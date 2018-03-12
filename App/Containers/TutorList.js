@@ -21,7 +21,7 @@ class TutorList extends Component {
     return (
       <View style={styles.section} >
         <Text>Tutor List</Text>
-        {this.props.tutors.map(x => <TutorRow key={x.id} tutorInfo={x} />)} 
+        {this.props.tutors.map(x => <TutorRow key={x.id} tutorInfo={x} tutorRowPress={this.props.tutorRowPress} />)}
       </View>
     )
   }
