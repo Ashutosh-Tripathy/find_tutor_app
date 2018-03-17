@@ -12,6 +12,7 @@ export const reducers = combineReducers({
   states: require('./StatesRedux').reducer,
   districts: require('./DistrictsRedux').reducer,
   searchTutor: require('./SearchTutorRedux').reducer,
+  tutorDetail: require('./TutorDetailRedux').reducer,
   search: require('./SearchRedux').reducer
 })
 
