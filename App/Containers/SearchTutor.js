@@ -100,7 +100,6 @@ class SearchTutor extends Component {
         })()
         }
         <Button title="Search" onPress={() => this.props.pressSearchTutor(this.state.subjectId, this.state.stateId, this.state.districtId)} />
-
         <TutorList tutors={(this.state.searchTutor && this.state.searchTutor.tutors) || []} tutorRowPress={this.onTutorRowPress} />
       </View>
     )

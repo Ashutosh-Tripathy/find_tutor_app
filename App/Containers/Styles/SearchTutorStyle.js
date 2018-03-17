@@ -7,6 +7,7 @@ export default StyleSheet.create({
     paddingBottom: Metrics.baseMargin
   },
   section: {
-    backgroundColor: '#ffffff'
+    backgroundColor: '#ffffff',
+    flex: 1
   }
 })

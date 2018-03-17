@@ -38,7 +38,7 @@ class TutorRow extends Component {
           <Text>Summary: </Text>
           <Text>{summary}</Text>
           <Text>Subject: </Text>
-          <Text>{this.props.states.states.find(x => x.id == subject_id).name}</Text>
+          <Text>{this.props.states.states.find(x => x.id == subject_id) && this.props.states.states.find(x => x.id == subject_id).name}</Text>
           <Text>About me: </Text>
           <Text>{about_me}</Text>
           <Text>----------------------------</Text>
