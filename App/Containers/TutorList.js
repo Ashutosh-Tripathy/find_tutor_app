@@ -24,24 +24,7 @@ class TutorList extends Component {
   renderRow = (tutor) => {
     const { name, gender, min_rate, max_rate, summary, subject_id, about_me } = tutor;
     return (
-      <TouchableHighlight onPress={this.props.tutorRowPress}>
-        <View>
-          <Text>Tutor Row</Text>
-          <Text>Name: </Text>
-          <Text>{name}</Text>
-          <Text>Gender: </Text>
-          <Text>{gender == "M" ? 'Male' : 'Female'}</Text>
-          <Text>Rate: </Text>
-          <Text>₹ {min_rate}/{max_rate}</Text>
-          <Text>Summary: </Text>
-          <Text>{summary}</Text>
-          <Text>Subject: </Text>
-          <Text>{this.props.states.states.find(x => x.id == subject_id) && this.props.states.states.find(x => x.id == subject_id).name}</Text>
-          <Text>About me: </Text>
-          <Text>{about_me}</Text>
-          <Text>----------------------------</Text>
-        </View>
-      </TouchableHighlight>
+      <TutorRow key={tutor.id} tutorInfo={tutor} tutorRowPress={this.props.tutorRowPress} />
     );
   }
   _keyExtractor = (item, index) => item.id;

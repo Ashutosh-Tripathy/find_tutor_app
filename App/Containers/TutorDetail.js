@@ -25,9 +25,28 @@ class TutorDetail extends Component {
   }
 
   render() {
+    const { state } = this.props.navigation;
+    var tutorInfo = state.params ? state.params.tutorInfo : "<undefined>";
+    const { name, gender, min_rate, max_rate, summary, subject_id, about_me } = tutorInfo;
+
     return (
       <View>
         <Text>TutorDetail Container</Text>
+        <Text>{JSON.stringify(tutorInfo)}</Text>
+        <Text>Name: </Text>
+        <Text>{name}</Text>
+        <Text>Gender: </Text>
+        <Text>{gender == "M" ? 'Male' : 'Female'}</Text>
+        <Text>Rate: </Text>
+        <Text>₹ {min_rate}/{max_rate}</Text>
+        <Text>Summary: </Text>
+        <Text>{summary}</Text>
+        <Text>Subject: </Text>
+        <Text>{this.props.states.states.find(x => x.id == subject_id) && this.props.states.states.find(x => x.id == subject_id).name}</Text>
+        <Text>About me: </Text>
+        <Text>{about_me}</Text>
+        <Text>----------------------------</Text>
+
       </View>
     )
   }
@@ -35,6 +54,7 @@ class TutorDetail extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    states: state.states
   }
 }
 

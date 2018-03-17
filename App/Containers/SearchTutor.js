@@ -60,8 +60,8 @@ class SearchTutor extends Component {
     this.props.getDistricts(stateValue);
   }
 
-  onTutorRowPress = () => {
-    this.props.navigation.navigate('TutorDetail', {});
+  onTutorRowPress = (tutorInfo) => {
+    this.props.navigation.navigate('TutorDetail', { tutorInfo });
   }
 
   render() {

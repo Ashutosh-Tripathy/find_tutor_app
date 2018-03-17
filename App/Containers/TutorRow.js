@@ -26,7 +26,7 @@ class TutorRow extends Component {
     const { name, gender, min_rate, max_rate, summary, subject_id, about_me } = this.props.tutorInfo;
     return (
 
-      <TouchableHighlight onPress={this.props.tutorRowPress}>
+      <TouchableHighlight onPress={this.props.tutorRowPress.bind(this, this.props.tutorInfo)}>
         <View>
           <Text>Tutor Row</Text>
           <Text>Name: </Text>
