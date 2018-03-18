@@ -5,6 +5,8 @@ import TutorList from '../Containers/TutorList'
 import SearchTutor from '../Containers/SearchTutor'
 import Header from '../Containers/Header'
 import LaunchScreen from '../Containers/LaunchScreen'
+import React, { Component } from 'react'
+import { View, Text, Picker, Button } from 'react-native'
 
 import styles from './Styles/NavigationStyles'
 
@@ -18,10 +20,13 @@ const PrimaryNav = StackNavigator({
   LaunchScreen: { screen: LaunchScreen }
 }, {
     // Default config for all screens
+    // headerMode: 'screen',
     initialRouteName: 'SearchTutor',
-    navigationOptions: {
+    navigationOptions: ({ navigation }) => ({
+      title: 'Find Tutor',
+      headerRight: <Header task={1} navigation={navigation} />,
       headerStyle: styles.header
-    }
+    })
   })
 
 export default PrimaryNav

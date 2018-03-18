@@ -18,11 +18,9 @@ class TutorRow extends Component {
   }
 
   onTutorRowPress = () => {
-    console.log(JSON.stringify(this.props));
   }
 
   render() {
-    console.log(JSON.stringify(this.props.tutorInfo));
     const { name, gender, min_rate, max_rate, summary, subject_id, about_me } = this.props.tutorInfo;
     return (
 

@@ -51,7 +51,6 @@ class SearchTutor extends Component {
   componentDidMount() {
     if (this.props.subjects.subjects.length == 0) {
       this.props.getSubjects();
-      console.log(JSON.stringify(this.props));
     }
   }
 
