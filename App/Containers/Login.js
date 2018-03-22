@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { ScrollView, View, Text, TextInput, Button } from 'react-native'
 import { connect } from 'react-redux'
 import { BackHandler } from "react-native"
+import { NavigationActions } from 'react-navigation';
+
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 
@@ -16,17 +18,29 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.navigate('SearchTutor'));
+    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.dispatch(NavigationActions.reset(
+      {
+        index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName: 'SearchTutor' })
+        ]
+      })));
   }
 
   componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', () => this.props.navigation.navigate('SearchTutor'));
+    BackHandler.removeEventListener('hardwareBackPress', () => this.props.navigation.dispatch(NavigationActions.reset(
+      {
+        index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName: 'SearchTutor' })
+        ]
+      })));
   }
 
   render() {
     return (
       <ScrollView>
-        
+
         {(() => {
           if (this.props.navigation.state.params.login) {
             return (<View>
