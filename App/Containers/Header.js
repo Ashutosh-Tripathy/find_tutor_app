@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Button, Text } from 'react-native'
 import { connect } from 'react-redux'
 
+
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 
@@ -9,13 +10,13 @@ import { connect } from 'react-redux'
 import styles from './Styles/HeaderStyle'
 
 class Header extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {}
   }
 
-  moveToLogin = () => {
-    this.props.navigation.navigate('TutorDetail', {});
+  moveToLogin = (id) => {
+    this.props.navigation.navigate('Login', { login: id == 1 });
   }
 
   render() {
@@ -24,7 +25,12 @@ class Header extends Component {
     // let view = isLoggedIn ? <Button title={`Hi ${name}`} /> : (<View><Button title="SignIn" /><Button title="SignUp" /></View>);
     return (
       <View>
-        <Button title="Login/Signup" onPress={this.moveToLogin} />
+        <View>
+          <Button title="Login" onPress={() => this.moveToLogin(1)} />
+        </View>
+        <View>
+          <Button title="Signup" onPress={() => this.moveToLogin(2)} />
+        </View>
       </View>
     )
   }

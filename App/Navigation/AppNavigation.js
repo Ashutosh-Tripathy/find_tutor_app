@@ -1,4 +1,5 @@
 import { StackNavigator } from 'react-navigation'
+import Login from '../Containers/Login'
 import TutorDetail from '../Containers/TutorDetail'
 import TutorRow from '../Containers/TutorRow'
 import TutorList from '../Containers/TutorList'
@@ -12,6 +13,7 @@ import styles from './Styles/NavigationStyles'
 
 // Manifest of possible screens
 const PrimaryNav = StackNavigator({
+  Login: { screen: Login },
   SearchTutor: { screen: SearchTutor },
   TutorDetail: { screen: TutorDetail },
   TutorRow: { screen: TutorRow },
