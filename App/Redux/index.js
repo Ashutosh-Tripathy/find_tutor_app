@@ -13,7 +13,8 @@ export const reducers = combineReducers({
   districts: require('./DistrictsRedux').reducer,
   searchTutor: require('./SearchTutorRedux').reducer,
   tutorDetail: require('./TutorDetailRedux').reducer,
-  search: require('./SearchRedux').reducer
+  search: require('./SearchRedux').reducer,
+  login: require('./LoginRedux').reducer
 })
 
 export default () => {

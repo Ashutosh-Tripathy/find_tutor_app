@@ -52,6 +52,9 @@ const create = (baseURL = 'http://52.172.34.19:8080/api/') => {
   } 
 
   const tutorDetail = (tutorId) => api.get('getTutorDetail/' + tutorId) 
+  const login = (tutorId) => api.post('authenticate/' + tutorId) 
+  // const signup = (tutorId) => api.post('app_user/' + tutorId) 
+  // const postTutorDetail = (tutorId) => api.post('tutor/' + tutorId) 
   // ------
   // STEP 3
   // ------
@@ -73,7 +76,8 @@ const create = (baseURL = 'http://52.172.34.19:8080/api/') => {
     getStates,
     getDistricts,
     searchTutor,
-    tutorDetail
+    tutorDetail,
+    login
   }
 }
 
