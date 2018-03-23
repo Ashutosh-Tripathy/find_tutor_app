@@ -13,64 +13,79 @@ import styles from './Styles/LoginStyle'
 class Login extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-    }
+      this.state = {
+        displayType: 1,
+        type: "S"
+      }
   }
 
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.dispatch(NavigationActions.reset(
-      {
-        index: 0,
-        actions: [
-          NavigationActions.navigate({ routeName: 'SearchTutor' })
-        ]
-      })));
+            {
+              index: 0,
+              actions: [
+                NavigationActions.navigate({ routeName: 'SearchTutor' })
+              ]
+            })));
   }
 
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', () => this.props.navigation.dispatch(NavigationActions.reset(
-      {
-        index: 0,
-        actions: [
-          NavigationActions.navigate({ routeName: 'SearchTutor' })
-        ]
-      })));
+            {
+              index: 0,
+              actions: [
+                NavigationActions.navigate({ routeName: 'SearchTutor' })
+              ]
+            })));
+  }
+
+  changeUI = (displayType) => {
+    this.setState(() => ({displayType  }));
+  }
+
+  changeUserType= (type) => {
+    this.setState(() => ({ type}));
   }
 
   render() {
     return (
-      <ScrollView>
-
+        <ScrollView>
+        <Button title="Login" onPress={() => this.changeUI(1)} />
+        <Button title="Signup" onPress={() => this.changeUI(2)} />
+        <Text>{JSON.stringify(this.state)} </Text>
         {(() => {
-          if (this.props.navigation.state.params.login) {
-            return (<View>
-              <Text>Uername: </Text>
-              <TextInput></TextInput>
-              <Text>Password: </Text>
-              <TextInput secureTextEntry={true}></TextInput>
-              <Button title="Login" />
-            </View>);
-          } else {
-            return (<View>
-              <Text>Login Container</Text>
-              <Text>Email: </Text>
-              <TextInput keyboardType="email-address"></TextInput>
-              <Text>Password: </Text>
-              <TextInput secureTextEntry={true}></TextInput>
-              <Text>Confirm Password: </Text>
-              <TextInput secureTextEntry={true}></TextInput>
-              <Text>Name: </Text>
-              <TextInput></TextInput>
-              <Text>Mobile: </Text>
-              <TextInput keyboardType="numeric"></TextInput>
-              <Button title="Signup" />
-            </View>);
-          }
-        })()
+                  if (this.state.displayType == 1) {
+                    return (<View>
+                        <Text>Uername: </Text>
+                        <TextInput></TextInput>
+                        <Text>Password: </Text>
+                        <TextInput secureTextEntry={true}></TextInput>
+                        <Button title="Login" />
+                        </View>);
+                  } else {
+                    return (<View>
+                        <Text>Login Container</Text>
+                        <Text>Email: </Text>
+                        <TextInput keyboardType="email-address"></TextInput>
+                        <Text>Password: </Text>
+                        <TextInput secureTextEntry={true}></TextInput>
+                        <Text>Confirm Password: </Text>
+                        <TextInput secureTextEntry={true}></TextInput>
+                        <Text>Name: </Text>
+                        <TextInput></TextInput>
+                        <Text>Mobile: </Text>
+                        <TextInput keyboardType="numeric"></TextInput>
+                        <Text>User type: </Text>
+                        <Button title="Student" onPress={() => this.changeUserType("S")} />
+                        <Button title="Tutor" onPress={() => this.changeUserType("T")} />
+                        <Button title="Signup" />
+                        </View>);
+                  }
+                })()
         }
 
-      </ScrollView>
-    )
+    </ScrollView>
+      )
   }
 }
 

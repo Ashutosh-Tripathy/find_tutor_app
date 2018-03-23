@@ -26,10 +26,7 @@ class Header extends Component {
     return (
       <View>
         <View>
-          <Button title="Login" onPress={() => this.moveToLogin(1)} />
-        </View>
-        <View>
-          <Button title="Signup" onPress={() => this.moveToLogin(2)} />
+          <Button title="Login/Signup" onPress={() => this.moveToLogin(1)} />
         </View>
       </View>
     )
