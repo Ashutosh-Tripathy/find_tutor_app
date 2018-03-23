@@ -14,7 +14,8 @@ export const reducers = combineReducers({
   searchTutor: require('./SearchTutorRedux').reducer,
   tutorDetail: require('./TutorDetailRedux').reducer,
   search: require('./SearchRedux').reducer,
-  login: require('./LoginRedux').reducer
+  login: require('./LoginRedux').reducer,
+  postTutorDetail: require('./PostTutorDetailRedux').reducer
 })
 
 export default () => {

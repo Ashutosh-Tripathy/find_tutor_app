@@ -36,25 +36,25 @@ const create = (baseURL = 'http://52.172.34.19:8080/api/') => {
   //
   const getRoot = () => api.get('')
   const getRate = () => api.get('rate_limit')
-  const getUser = (username) => api.get('search/users', {q: username})
-  
-  const getSubjects = () => api.get('subjects') 
-  const getStates = () => api.get('states') 
-  
+  const getUser = (username) => api.get('search/users', { q: username })
+
+  const getSubjects = () => api.get('subjects')
+  const getStates = () => api.get('states')
+
   const getDistricts = (stateId) => {
     let resp = api.get('districts/' + (stateId || 5));
     return resp;
-  } 
-  
+  }
+
   const searchTutor = (subjectId, stateId, districtId) => {
     let resp = api.get('searchtutor?subject_id=' + (subjectId || 0) + '&state_id=' + (stateId || 0) + '&district_id=' + (districtId || 0));
     return resp;
-  } 
+  }
 
-  const tutorDetail = (tutorId) => api.get('getTutorDetail/' + tutorId) 
-  const login = (tutorId) => api.post('authenticate/' + tutorId) 
+  const tutorDetail = (tutorId) => api.get('getTutorDetail/' + tutorId)
+  const login = (tutorId) => api.post('authenticate/' + tutorId)
   // const signup = (tutorId) => api.post('app_user/' + tutorId) 
-  // const postTutorDetail = (tutorId) => api.post('tutor/' + tutorId) 
+  const postTutorDetail = (tutorId) => api.post('tutor/' + tutorId)
   // ------
   // STEP 3
   // ------
@@ -77,7 +77,8 @@ const create = (baseURL = 'http://52.172.34.19:8080/api/') => {
     getDistricts,
     searchTutor,
     tutorDetail,
-    login
+    login,
+    postTutorDetail
   }
 }
 
