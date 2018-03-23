@@ -15,6 +15,7 @@ export const reducers = combineReducers({
   tutorDetail: require('./TutorDetailRedux').reducer,
   search: require('./SearchRedux').reducer,
   login: require('./LoginRedux').reducer,
+  signup: require('./SignupRedux').reducer,
   postTutorDetail: require('./PostTutorDetailRedux').reducer
 })
 

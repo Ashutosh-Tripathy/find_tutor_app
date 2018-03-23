@@ -13,7 +13,7 @@ import { DistrictsTypes } from '../Redux/DistrictsRedux'
 import { SearchTutorTypes } from '../Redux/SearchTutorRedux'
 import { TutorDetailTypes } from '../Redux/TutorDetailRedux'
 import { LoginTypes } from '../Redux/LoginRedux'
-// import { SignupTypes } from '../Redux/SignupRedux'
+import { SignupTypes } from '../Redux/SignupRedux'
 import { PostTutorDetailTypes } from '../Redux/PostTutorDetailRedux'
 
 /* ------------- Sagas ------------- */
@@ -26,7 +26,7 @@ import { getDistricts } from './DistrictsSagas'
 import { searchTutor } from './SearchTutorSagas'
 import { tutorDetail } from './TutorDetailSagas'
 import { login } from './LoginSagas'
-// import { signup } from './SignupSagas'
+import { signup } from './SignupSagas'
 import { postTutorDetail } from './PostTutorDetailSagas'
 
 /* ------------- API ------------- */
@@ -50,6 +50,7 @@ export default function * root () {
     takeLatest(SearchTutorTypes.SEARCH_TUTOR_REQUEST, searchTutor, api),
     takeLatest(TutorDetailTypes.TUTOR_DETAIL_REQUEST, tutorDetail, api),
     takeLatest(LoginTypes.LOGIN_REQUEST, login, api),
+    takeLatest(SignupTypes.SIGNUP_REQUEST, signup, api),
     takeLatest(PostTutorDetailTypes.POST_TUTOR_DETAIL_REQUEST, postTutorDetail, api)
   ])
 }
