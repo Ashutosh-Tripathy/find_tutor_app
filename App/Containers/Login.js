@@ -47,6 +47,10 @@ class Login extends Component {
     this.setState(() => ({ type }));
   }
 
+  handleChange(name, value) {
+    this.setState(() => ({ [name]: value }));
+  }
+
   render() {
     return (
       <ScrollView>
@@ -66,15 +70,15 @@ class Login extends Component {
             return (<View>
               <Text>Login Container</Text>
               <Text>Email: </Text>
-              <TextInput keyboardType="email-address"></TextInput>
+              <TextInput name="email" onChangeText={(txt) => this.handleChange("email", txt)} keyboardType="email-address">{this.state.email}</TextInput>
               <Text>Password: </Text>
-              <TextInput secureTextEntry={true}></TextInput>
+              <TextInput name="password" onChangeText={(txt) => this.handleChange("password", txt)} secureTextEntry={true}>{this.state.password}</TextInput>
               <Text>Confirm Password: </Text>
-              <TextInput secureTextEntry={true}></TextInput>
+              <TextInput name="confirm_email" onChangeText={(txt) => this.handleChange("confirm_email", txt)} secureTextEntry={true}>{this.state.confirm_password}</TextInput>
               <Text>Name: </Text>
-              <TextInput></TextInput>
+              <TextInput name="name" onChangeText={(txt) => this.handleChange("name", txt)}>{this.state.name}</TextInput>
               <Text>Mobile: </Text>
-              <TextInput keyboardType="numeric"></TextInput>
+              <TextInput name="mobile" onChangeText={(txt) => this.handleChange("mobile", txt)} keyboardType="numeric">{this.state.mobile}</TextInput>
               <Text>User type: </Text>
               <Button title="Student" onPress={() => this.changeUserType("S")} />
               <Button title="Tutor" onPress={() => this.changeUserType("T")} />
