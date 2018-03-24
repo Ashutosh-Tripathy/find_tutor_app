@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, View, Text, TextInput, Button } from 'react-native'
+import { ScrollView, View, Text, TextInput, Button, ToastAndroid } from 'react-native'
 import { connect } from 'react-redux'
 import { BackHandler } from "react-native"
 import { NavigationActions } from 'react-navigation';
@@ -49,6 +49,7 @@ class Login extends Component {
 
   handleChange(name, value) {
     this.setState(() => ({ [name]: value }));
+    ToastAndroid.showWithGravity(name + ": " + value, ToastAndroid.SHORT, ToastAndroid.CENTER);
   }
 
   render() {
