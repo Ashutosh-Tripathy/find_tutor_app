@@ -3,6 +3,8 @@ import { ScrollView, View, Text, TextInput, Button, ToastAndroid } from 'react-n
 import { connect } from 'react-redux'
 import { BackHandler } from "react-native"
 import { NavigationActions } from 'react-navigation';
+import { SignupTypes } from '../Redux/SignupRedux';
+import PropTypes from 'prop-types';
 
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
@@ -11,12 +13,19 @@ import { NavigationActions } from 'react-navigation';
 import styles from './Styles/LoginStyle'
 
 class Login extends Component {
+
+  static propTypes = {
+    // signup: PropTypes.func,
+  }
+
   constructor(props) {
     super(props)
     this.state = {
       displayType: 1,
       type: "S"
     }
+
+    this.pressSignupSubmit = this.pressSignupSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -49,7 +58,23 @@ class Login extends Component {
 
   handleChange(name, value) {
     this.setState(() => ({ [name]: value }));
-    ToastAndroid.showWithGravity(name + ": " + value, ToastAndroid.SHORT, ToastAndroid.CENTER);
+  }
+
+  pressSignupSubmit() {
+    let { email, password, name, mobile, type } = this.state;
+    // if (!(email && password && name && mobile && type)) {
+    //   ToastAndroid.showWithGravity('All fields are mandatory.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+    // } else if (this.state.mobile.length !== 10) {
+    //   ToastAndroid.showWithGravity('Mobile number should contain 10 digits.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+    // } else if (this.state.password.length < 6) {
+    //   ToastAndroid.showWithGravity('Password length should be greater than or equal to 6.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+    // } else if (this.state.password !== this.state.confirm_password) {
+    //   ToastAndroid.showWithGravity('Password and confirm password should be same.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+    // } else {
+    //   this.props.signup(email, password, name, mobile, type);
+    // }
+    this.props.signup(email, password, name, mobile, type);
+    
   }
 
   render() {
@@ -75,7 +100,7 @@ class Login extends Component {
               <Text>Password: </Text>
               <TextInput name="password" onChangeText={(txt) => this.handleChange("password", txt)} secureTextEntry={true}>{this.state.password}</TextInput>
               <Text>Confirm Password: </Text>
-              <TextInput name="confirm_email" onChangeText={(txt) => this.handleChange("confirm_email", txt)} secureTextEntry={true}>{this.state.confirm_password}</TextInput>
+              <TextInput name="confirm_password" onChangeText={(txt) => this.handleChange("confirm_password", txt)} secureTextEntry={true}>{this.state.confirm_password}</TextInput>
               <Text>Name: </Text>
               <TextInput name="name" onChangeText={(txt) => this.handleChange("name", txt)}>{this.state.name}</TextInput>
               <Text>Mobile: </Text>
@@ -83,7 +108,7 @@ class Login extends Component {
               <Text>User type: </Text>
               <Button title="Student" onPress={() => this.changeUserType("S")} />
               <Button title="Tutor" onPress={() => this.changeUserType("T")} />
-              <Button title="Submit" />
+              <Button title="Submit" onPress={this.pressSignupSubmit} />
             </View>);
           }
         })()
@@ -101,6 +126,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    signup: (email, password, name, mobile, type) => dispatch({ type: SignupTypes.SIGNUP_REQUEST, signup_data: { email, password, name, mobile, type } })
   }
 }
 

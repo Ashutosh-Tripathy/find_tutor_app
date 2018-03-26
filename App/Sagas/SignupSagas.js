@@ -4,8 +4,8 @@ import SignupActions from '../Redux/SignupRedux'
 
 export function* signup(api, action) {
   // make the call to the api
-  const { email, password, Name, mobile, type }  = action;
-  const response = yield call(api.signup, {email, password, name, mobile, type })
+  const { email, password, name, mobile, type } = action.signup_data;
+  const response = yield call(api.signup, { email, password, name, mobile, type })
 
   if (response.ok) {
     const tutor = path(['data'], response);
