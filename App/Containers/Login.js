@@ -62,19 +62,19 @@ class Login extends Component {
 
   pressSignupSubmit() {
     let { email, password, name, mobile, type } = this.state;
-    // if (!(email && password && name && mobile && type)) {
-    //   ToastAndroid.showWithGravity('All fields are mandatory.', ToastAndroid.SHORT, ToastAndroid.CENTER);
-    // } else if (this.state.mobile.length !== 10) {
-    //   ToastAndroid.showWithGravity('Mobile number should contain 10 digits.', ToastAndroid.SHORT, ToastAndroid.CENTER);
-    // } else if (this.state.password.length < 6) {
-    //   ToastAndroid.showWithGravity('Password length should be greater than or equal to 6.', ToastAndroid.SHORT, ToastAndroid.CENTER);
-    // } else if (this.state.password !== this.state.confirm_password) {
-    //   ToastAndroid.showWithGravity('Password and confirm password should be same.', ToastAndroid.SHORT, ToastAndroid.CENTER);
-    // } else {
-    //   this.props.signup(email, password, name, mobile, type);
-    // }
+    if (!(email && password && name && mobile && type)) {
+      ToastAndroid.showWithGravity('All fields are mandatory.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+    } else if (this.state.mobile.length !== 10) {
+      ToastAndroid.showWithGravity('Mobile number should contain 10 digits.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+    } else if (this.state.password.length < 6) {
+      ToastAndroid.showWithGravity('Password length should be greater than or equal to 6.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+    } else if (this.state.password !== this.state.confirm_password) {
+      ToastAndroid.showWithGravity('Password and confirm password should be same.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+    } else {
+      this.props.signup(email, password, name, mobile, type);
+    }
     this.props.signup(email, password, name, mobile, type);
-    
+
   }
 
   render() {
@@ -83,37 +83,31 @@ class Login extends Component {
         <Button title="Login" onPress={() => this.changeUI(1)} />
         <Button title="Signup" onPress={() => this.changeUI(2)} />
         <Text>{JSON.stringify(this.state)} </Text>
-        {(() => {
-          if (this.state.displayType == 1) {
-            return (<View>
-              <Text>Uername: </Text>
-              <TextInput></TextInput>
-              <Text>Password: </Text>
-              <TextInput secureTextEntry={true}></TextInput>
-              <Button title="Submit" />
-            </View>);
-          } else {
-            return (<View>
-              <Text>Login Container</Text>
-              <Text>Email: </Text>
-              <TextInput name="email" onChangeText={(txt) => this.handleChange("email", txt)} keyboardType="email-address">{this.state.email}</TextInput>
-              <Text>Password: </Text>
-              <TextInput name="password" onChangeText={(txt) => this.handleChange("password", txt)} secureTextEntry={true}>{this.state.password}</TextInput>
-              <Text>Confirm Password: </Text>
-              <TextInput name="confirm_password" onChangeText={(txt) => this.handleChange("confirm_password", txt)} secureTextEntry={true}>{this.state.confirm_password}</TextInput>
-              <Text>Name: </Text>
-              <TextInput name="name" onChangeText={(txt) => this.handleChange("name", txt)}>{this.state.name}</TextInput>
-              <Text>Mobile: </Text>
-              <TextInput name="mobile" onChangeText={(txt) => this.handleChange("mobile", txt)} keyboardType="numeric">{this.state.mobile}</TextInput>
-              <Text>User type: </Text>
-              <Button title="Student" onPress={() => this.changeUserType("S")} />
-              <Button title="Tutor" onPress={() => this.changeUserType("T")} />
-              <Button title="Submit" onPress={this.pressSignupSubmit} />
-            </View>);
-          }
-        })()
-        }
-
+        {this.state.displayType == 1 &&
+          (<View>
+            <Text>Uername: </Text>
+            <TextInput></TextInput>
+            <Text>Password: </Text>
+            <TextInput secureTextEntry={true}></TextInput>
+            <Button title="Submit" />
+          </View>)}
+        {this.state.displayType !== 1 && (<View>
+          <Text>Login Container</Text>
+          <Text>Email: </Text>
+          <TextInput name="email" onChangeText={(txt) => this.handleChange("email", txt)} keyboardType="email-address">{this.state.email}</TextInput>
+          <Text>Password: </Text>
+          <TextInput name="password" onChangeText={(txt) => this.handleChange("password", txt)} secureTextEntry={true}>{this.state.password}</TextInput>
+          <Text>Confirm Password: </Text>
+          <TextInput name="confirm_password" onChangeText={(txt) => this.handleChange("confirm_password", txt)} secureTextEntry={true}>{this.state.confirm_password}</TextInput>
+          <Text>Name: </Text>
+          <TextInput name="name" onChangeText={(txt) => this.handleChange("name", txt)}>{this.state.name}</TextInput>
+          <Text>Mobile: </Text>
+          <TextInput name="mobile" onChangeText={(txt) => this.handleChange("mobile", txt)} keyboardType="numeric">{this.state.mobile}</TextInput>
+          <Text>User type: </Text>
+          <Button title="Student" onPress={() => this.changeUserType("S")} />
+          <Button title="Tutor" onPress={() => this.changeUserType("T")} />
+          <Button title="Submit" onPress={this.pressSignupSubmit} />
+        </View>)}
       </ScrollView>
     )
   }
