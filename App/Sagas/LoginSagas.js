@@ -4,8 +4,8 @@ import LoginActions from '../Redux/LoginRedux'
 
 export function* login(api, action) {
   // make the call to the api
-  const { tutorId }  = action;
-  const response = yield call(api.login, tutorId)
+  let { email, password } = action.login_data;
+  const response = yield call(api.login, email, password)
 
   if (response.ok) {
     const tutor = path(['data'], response);

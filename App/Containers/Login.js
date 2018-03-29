@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { BackHandler } from "react-native"
 import { NavigationActions } from 'react-navigation';
 import { SignupTypes } from '../Redux/SignupRedux';
+import { LoginTypes } from '../Redux/LoginRedux';
 import PropTypes from 'prop-types';
 
 // Add Actions - replace 'Your' with whatever your reducer is called :)
@@ -26,6 +27,7 @@ class Login extends Component {
     }
 
     this.pressSignupSubmit = this.pressSignupSubmit.bind(this);
+    this.pressLoginSubmit = this.pressLoginSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -46,6 +48,11 @@ class Login extends Component {
           NavigationActions.navigate({ routeName: 'SearchTutor' })
         ]
       })));
+  }
+
+
+  componentWillReceiveProps(nextProps) {
+    this.setState(() => ({ login: nextProps.login }));
   }
 
   changeUI = (displayType) => {
@@ -71,13 +78,23 @@ class Login extends Component {
     } else if (this.state.password !== this.state.confirm_password) {
       ToastAndroid.showWithGravity('Password and confirm password should be same.', ToastAndroid.SHORT, ToastAndroid.CENTER);
     } else {
-      this.props.signup(email, password, name, mobile, type);
+      email = email.toLowerCase();
+      this.props.signupAction(email, password, name, mobile, type);
     }
-    this.props.signup(email, password, name, mobile, type);
+  }
 
+  pressLoginSubmit() {
+    let { email, password } = this.state;
+    if (!(email && password)) {
+      ToastAndroid.showWithGravity('All fields are mandatory.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+    } else {
+      email = email.toLowerCase();
+      this.props.loginAction(email, password)
+    }
   }
 
   render() {
+    let { login, signup } = this.state;
     return (
       <ScrollView>
         <Button title="Login" onPress={() => this.changeUI(1)} />
@@ -85,12 +102,17 @@ class Login extends Component {
         <Text>{JSON.stringify(this.state)} </Text>
         {this.state.displayType == 1 &&
           (<View>
-            <Text>Uername: </Text>
-            <TextInput></TextInput>
+            <Text>Email: </Text>
+            <TextInput name="email" onChangeText={(txt) => this.handleChange("email", txt)} keyboardType="email-address">{this.state.email}</TextInput>
             <Text>Password: </Text>
-            <TextInput secureTextEntry={true}></TextInput>
-            <Button title="Submit" />
+            <TextInput name="password" onChangeText={(txt) => this.handleChange("password", txt)} secureTextEntry={true}>{this.state.password}</TextInput>
+            <Button title="Submit" onPress={this.pressLoginSubmit} />
           </View>)}
+        {this.state.displayType == 1 && login && !login.fetching && (login.error ?
+          ToastAndroid.showWithGravity('Invalid Email/Password.', ToastAndroid.SHORT, ToastAndroid.CENTER) :
+          ToastAndroid.showWithGravity('Token is: ' + login.login.token, ToastAndroid.SHORT, ToastAndroid.CENTER)
+        )
+        }
         {this.state.displayType !== 1 && (<View>
           <Text>Login Container</Text>
           <Text>Email: </Text>
@@ -115,12 +137,14 @@ class Login extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    login: state.login,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    signup: (email, password, name, mobile, type) => dispatch({ type: SignupTypes.SIGNUP_REQUEST, signup_data: { email, password, name, mobile, type } })
+    signupAction: (email, password, name, mobile, type) => dispatch({ type: SignupTypes.SIGNUP_REQUEST, signup_data: { email, password, name, mobile, type } }),
+    loginAction: (email, password) => dispatch({ type: LoginTypes.LOGIN_REQUEST, login_data: { email, password } })
   }
 }
 

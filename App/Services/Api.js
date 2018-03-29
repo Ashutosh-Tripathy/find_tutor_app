@@ -52,7 +52,8 @@ const create = (baseURL = 'http://52.172.34.19:8080/api/') => {
   }
 
   const tutorDetail = (tutorId) => api.get('getTutorDetail/' + tutorId)
-  const login = (tutorId) => api.post('authenticate/' + tutorId)
+  //const login = (email, password) => api.post('authenticate?email=' + email + '&password=' + password)
+  const login = (email, password) => api.post('authenticate', {email, password})
   const signup = ({ email, password, name, mobile, type }) => {
     return api.post('app_user?email=' + email + '&password=' + password + '&name=' + name + '&mobile=' + mobile + '&type=' + type)
   }
