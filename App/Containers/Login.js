@@ -108,11 +108,7 @@ class Login extends Component {
             <TextInput name="password" onChangeText={(txt) => this.handleChange("password", txt)} secureTextEntry={true}>{this.state.password}</TextInput>
             <Button title="Submit" onPress={this.pressLoginSubmit} />
           </View>)}
-        {this.state.displayType == 1 && login && !login.fetching && (login.error ?
-          ToastAndroid.showWithGravity('Invalid Email/Password.', ToastAndroid.SHORT, ToastAndroid.CENTER) :
-          ToastAndroid.showWithGravity('Token is: ' + login.login.token, ToastAndroid.SHORT, ToastAndroid.CENTER)
-        )
-        }
+
         {this.state.displayType !== 1 && (<View>
           <Text>Login Container</Text>
           <Text>Email: </Text>

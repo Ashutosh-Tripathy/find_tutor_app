@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Picker, Button } from 'react-native'
+import { View, Text, Picker, Button, AsyncStorage } from 'react-native'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 // Add Actions - replace 'Your' with whatever your reducer is called :)
@@ -31,7 +31,8 @@ class SearchTutor extends Component {
       subjectId: 0,
       stateId: 0,
       districtId: 0,
-      tutors: []
+      tutors: [],
+      userInfo: {}
     }
     this.showExtraSearchFields = this.showExtraSearchFields.bind(this);
     // this.loadStates = this.loadStates.bind(this);
@@ -48,10 +49,25 @@ class SearchTutor extends Component {
     }
   }
 
+  getStoredToken = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@FindTutorStore:token');
+      if (value !== null) {
+        // We have data!!
+        console.log(value);
+        this.state.userInfo['token'] = value;
+      }
+    } catch (error) {
+      // Error retrieving data
+      ToastAndroid.showWithGravity('Failed to get token.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+    }
+  }
+
   componentDidMount() {
     if (this.props.subjects.subjects.length == 0) {
       this.props.getSubjects();
     }
+    this.getStoredToken()
   }
 
   stateChange = (stateValue) => {
@@ -66,6 +82,7 @@ class SearchTutor extends Component {
   render() {
     return (
       <View style={styles.section} >
+        <Text>{JSON.stringify(this.state.userInfo)}</Text>
         <Text>Subject*</Text>
         <Picker selectedValue={this.state.subjectId} onValueChange={(subjectValue) => this.setState({ subjectId: subjectValue })}>
           <Picker.Item label="Please select any subject" value="0" />
