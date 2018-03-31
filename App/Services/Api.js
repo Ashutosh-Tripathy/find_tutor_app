@@ -46,6 +46,11 @@ const create = (baseURL = 'http://52.172.34.19:8080/api/') => {
     return resp;
   }
 
+  const getAppUser = (token, userId) => {
+    let resp = api.get('app_user/' + userId);
+    return resp;
+  }
+
   const searchTutor = (subjectId, stateId, districtId) => {
     let resp = api.get('searchtutor?subject_id=' + (subjectId || 0) + '&state_id=' + (stateId || 0) + '&district_id=' + (districtId || 0));
     return resp;
@@ -53,7 +58,7 @@ const create = (baseURL = 'http://52.172.34.19:8080/api/') => {
 
   const tutorDetail = (tutorId) => api.get('getTutorDetail/' + tutorId)
   //const login = (email, password) => api.post('authenticate?email=' + email + '&password=' + password)
-  const login = (email, password) => api.post('authenticate', {email, password})
+  const login = (email, password) => api.post('authenticate', { email, password })
   const signup = ({ email, password, name, mobile, type }) => {
     return api.post('app_user?email=' + email + '&password=' + password + '&name=' + name + '&mobile=' + mobile + '&type=' + type)
   }
@@ -78,6 +83,7 @@ const create = (baseURL = 'http://52.172.34.19:8080/api/') => {
     getSubjects,
     getStates,
     getDistricts,
+    getAppUser,
     searchTutor,
     tutorDetail,
     login,

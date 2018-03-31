@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Picker, Button, AsyncStorage } from 'react-native'
+import { View, Text, Picker, Button, AsyncStorage, ToastAndroid } from 'react-native'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 // Add Actions - replace 'Your' with whatever your reducer is called :)
@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import { SubjectsTypes } from '../Redux/SubjectsRedux';
 import { StatesTypes } from '../Redux/StatesRedux';
 import { DistrictsTypes } from '../Redux/DistrictsRedux';
+import { AppUserTypes } from '../Redux/AppUserRedux';
 import { SearchTutorTypes } from '../Redux/SearchTutorRedux';
 import TutorList from './TutorList';
 
@@ -20,7 +21,8 @@ class SearchTutor extends Component {
     getSubjects: PropTypes.func,
     getStates: PropTypes.func,
     getDistricts: PropTypes.func,
-    searchTutor: PropTypes.func
+    searchTutor: PropTypes.func,
+    getAppUser: PropTypes.func
   }
 
   constructor(props) {
@@ -35,11 +37,15 @@ class SearchTutor extends Component {
       userInfo: {}
     }
     this.showExtraSearchFields = this.showExtraSearchFields.bind(this);
+
     // this.loadStates = this.loadStates.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState(() => ({ subjects: nextProps.subjects, states: nextProps.states, districts: nextProps.districts, searchTutor: nextProps.searchTutor }));
+    this.setState(() => ({
+      subjects: nextProps.subjects, states: nextProps.states, districts: nextProps.districts,
+      searchTutor: nextProps.searchTutor, appUser: nextProps.appUser
+    }));
   }
 
   showExtraSearchFields = () => {
@@ -51,15 +57,26 @@ class SearchTutor extends Component {
 
   getStoredToken = async () => {
     try {
-      const value = await AsyncStorage.getItem('@FindTutorStore:token');
-      if (value !== null) {
-        // We have data!!
-        console.log(value);
-        this.state.userInfo['token'] = value;
+      const token = await AsyncStorage.getItem('@FindTutorStore:token');
+      if (token !== null) {
+        this.state.userInfo['token'] = token;
       }
     } catch (error) {
       // Error retrieving data
-      ToastAndroid.showWithGravity('Failed to get token.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+      ToastAndroid.showWithGravity('Failed to get data.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+    }
+  }
+
+  getStoredUserId = async () => {
+    try {
+      const userId = await AsyncStorage.getItem('@FindTutorStore:userId');
+      if (userId !== null) {
+        this.state.userInfo['userId'] = userId;
+        this.props.getAppUser(this.state.userInfo.token, this.state.userInfo.userId);
+      }
+    } catch (error) {
+      // Error retrieving data
+      ToastAndroid.showWithGravity('Failed to get data.', ToastAndroid.SHORT, ToastAndroid.CENTER);
     }
   }
 
@@ -67,7 +84,9 @@ class SearchTutor extends Component {
     if (this.props.subjects.subjects.length == 0) {
       this.props.getSubjects();
     }
-    this.getStoredToken()
+    // if (this.state.userInfo.token) this.props.getAppUser(this.state.userInfo.token, this.state.userInfo.userId)
+    this.getStoredToken();
+    this.getStoredUserId();
   }
 
   stateChange = (stateValue) => {
@@ -83,6 +102,7 @@ class SearchTutor extends Component {
     return (
       <View style={styles.section} >
         <Text>{JSON.stringify(this.state.userInfo)}</Text>
+        <Text>{JSON.stringify(this.state.appUser)}</Text>
         <Text>Subject*</Text>
         <Picker selectedValue={this.state.subjectId} onValueChange={(subjectValue) => this.setState({ subjectId: subjectValue })}>
           <Picker.Item label="Please select any subject" value="0" />
@@ -133,7 +153,8 @@ const mapStateToProps = (state) => {
     subjects: state.subjects,
     states: state.states,
     districts: state.districts,
-    searchTutor: state.searchTutor
+    searchTutor: state.searchTutor,
+    appUser: state.appUser
   }
 }
 
@@ -142,8 +163,12 @@ const mapDispatchToProps = (dispatch) => {
     getSubjects: () => dispatch({ type: SubjectsTypes.SUBJECTS_REQUEST }),
     getStates: () => dispatch({ type: StatesTypes.STATES_REQUEST }),
     getDistricts: (stateId) => dispatch({ type: DistrictsTypes.DISTRICTS_REQUEST, stateId }),
-    pressSearchTutor: (subjectId, stateId, districtId) => dispatch({ type: SearchTutorTypes.SEARCH_TUTOR_REQUEST, subjectId, stateId, districtId })
+    pressSearchTutor: (subjectId, stateId, districtId) => dispatch({ type: SearchTutorTypes.SEARCH_TUTOR_REQUEST, subjectId, stateId, districtId }),
+    getAppUser: (token, userId) => dispatch({ type: AppUserTypes.APP_USER_REQUEST, token, userId })
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchTutor)
+
+// npx babel - node test.js
+

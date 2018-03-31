@@ -22,6 +22,24 @@ async function storeToken(token) {
   }
 }
 
+async function storeUserId(userId) {
+  try {
+    await AsyncStorage.setItem('@FindTutorStore:id', userId.toString());
+  } catch (error) {
+    // Error saving data
+    ToastAndroid.showWithGravity('Failed to store data.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+  }
+}
+
+
+async function storeUserInfo(token, userId) {
+  try {
+    await AsyncStorage.multiSet([['@FindTutorStore:token', token], ['@FindTutorStore:userId', userId.toString()]]);
+  } catch (error) {
+    // Error saving data
+    ToastAndroid.showWithGravity('Failed to store data.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+  }
+}
 
 /* ------------- Initial State ------------- */
 
@@ -43,7 +61,9 @@ export const request = (state) =>
 // successful login lookup
 export const success = (state, action) => {
   const { login } = action;
-  storeToken(login.token);
+  // storeToken(login.token);
+  // storeUserId(login.app_user.id);
+  storeUserInfo(login.token, login.app_user.id);
   return state.merge({ fetching: false, error: null, login });
 }
 

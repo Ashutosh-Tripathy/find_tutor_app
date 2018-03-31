@@ -4,18 +4,19 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  districtsRequest: ['stateId'],
-  districtsSuccess: ['districts'],
-  districtsFailure: null
+  appUserRequest: [],
+  appUserSuccess: ['appUser'],
+  appUserFailure: null
 })
 
-export const DistrictsTypes = Types
+export const AppUserTypes = Types
+
 export default Creators
 
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  districts: [],
+  appUser: [],
   fetching: null,
   error: null,
 })
@@ -25,24 +26,24 @@ export const INITIAL_STATE = Immutable({
 
 /* ------------- Reducers ------------- */
 
-// request the districts for a state
+// request the appUser for a state
 export const request = (state) =>
-  state.merge({ fetching: true, districts: [] })
+  state.merge({ fetching: true, appUser: [] })
 
-// successful districts lookup
+// successful appUser lookup
 export const success = (state, action) => {
-  const { districts } = action
-  return state.merge({ fetching: false, error: null, districts })
+  const { appUser } = action
+  return state.merge({ fetching: false, error: null, appUser })
 }
 
-// failed to get the districts
+// failed to get the appUser
 export const failure = (state) =>
-  state.merge({ fetching: false, error: true, districts: [] })
+  state.merge({ fetching: false, error: true, appUser: [] })
 
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.DISTRICTS_REQUEST]: request,
-  [Types.DISTRICTS_SUCCESS]: success,
-  [Types.DISTRICTS_FAILURE]: failure
+  [Types.APP_USER_REQUEST]: request,
+  [Types.APP_USER_SUCCESS]: success,
+  [Types.APP_USER_FAILURE]: failure
 })

@@ -10,6 +10,7 @@ import { GithubTypes } from '../Redux/GithubRedux'
 import { SubjectsTypes } from '../Redux/SubjectsRedux'
 import { StatesTypes } from '../Redux/StatesRedux'
 import { DistrictsTypes } from '../Redux/DistrictsRedux'
+import { AppUserTypes } from '../Redux/AppUserRedux'
 import { SearchTutorTypes } from '../Redux/SearchTutorRedux'
 import { TutorDetailTypes } from '../Redux/TutorDetailRedux'
 import { LoginTypes } from '../Redux/LoginRedux'
@@ -23,6 +24,7 @@ import { getUserAvatar } from './GithubSagas'
 import { getSubjects } from './SubjectsSagas'
 import { getStates } from './StatesSagas'
 import { getDistricts } from './DistrictsSagas'
+import { getAppUser } from './AppUserSagas'
 import { searchTutor } from './SearchTutorSagas'
 import { tutorDetail } from './TutorDetailSagas'
 import { login } from './LoginSagas'
@@ -47,6 +49,7 @@ export default function * root () {
     takeLatest(SubjectsTypes.SUBJECTS_REQUEST, getSubjects, api),
     takeLatest(StatesTypes.STATES_REQUEST, getStates, api),
     takeLatest(DistrictsTypes.DISTRICTS_REQUEST, getDistricts, api),
+    takeLatest(AppUserTypes.APP_USER_REQUEST, getAppUser, api),
     takeLatest(SearchTutorTypes.SEARCH_TUTOR_REQUEST, searchTutor, api),
     takeLatest(TutorDetailTypes.TUTOR_DETAIL_REQUEST, tutorDetail, api),
     takeLatest(LoginTypes.LOGIN_REQUEST, login, api),
