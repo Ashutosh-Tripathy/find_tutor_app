@@ -12,7 +12,15 @@ import styles from './Styles/HeaderStyle'
 class Header extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      appUser: {}
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState(() => ({
+      appUser: nextProps.appUser
+    }));
   }
 
   moveToLogin = (id) => {
@@ -20,13 +28,14 @@ class Header extends Component {
   }
 
   render() {
-    let isLoggedIn = false;
-    let name = 'Ashu';
+    const { appUser } = this.state.appUser;
+    let userName = appUser && appUser.name;
+    let btn = userName ? <Button title={'Hi ' + userName + '!'} onPress={() => { }} /> : <Button title="Login/Signup" onPress={() => this.moveToLogin(1)} />;
     // let view = isLoggedIn ? <Button title={`Hi ${name}`} /> : (<View><Button title="SignIn" /><Button title="SignUp" /></View>);
     return (
       <View>
         <View>
-          <Button title="Login/Signup" onPress={() => this.moveToLogin(1)} />
+          {btn}
         </View>
       </View>
     )
@@ -35,6 +44,7 @@ class Header extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    appUser: state.appUser
   }
 }
 
